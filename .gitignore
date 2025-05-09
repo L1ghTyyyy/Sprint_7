@@ -40,3 +40,4 @@ migrations/
 # Local configuration files
 *.env
 *.local
+.DS_Store
