@@ -37,6 +37,12 @@ class SamokatAPICourier:
     def __init__(self):
         self._courier_data = {}
 
+    def delete_courier(self, courier_id):
+        """Удаляет курьера по ID"""
+        return requests.delete(
+            f"https://qa-scooter.praktikum-services.ru/api/v1/courier/{courier_id}"
+        )
+
     @property
     def courier_data(self):
         return self._courier_data

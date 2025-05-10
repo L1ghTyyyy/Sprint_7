@@ -9,7 +9,7 @@ def courier():
 
 @pytest.fixture
 def create_new_courier(courier):
-    """Фикстура для регистрации нового курьера"""
+    """Фикстура для регистрации и удаления курьера"""
     login = SamokatAPICourier.generate_courier_data()
     password = SamokatAPICourier.generate_courier_data()
     first_name = SamokatAPICourier.generate_courier_data()
@@ -18,7 +18,11 @@ def create_new_courier(courier):
     courier.courier_data = courier_data
     courier.post_request_create_courier()
 
-    return login, password, first_name
+    yield login, password, first_name
+
+    courier_id = courier.post_request_login_courier({'login': login, 'password': password}).json().get("id")
+    if courier_id:
+        courier.delete_request_delete_courier(courier_id)
 
 
 @pytest.fixture
